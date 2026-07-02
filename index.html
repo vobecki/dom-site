@@ -7,29 +7,234 @@
     <style>
         :root {
             --gold: #D4AF37;
-            --black: #0A0A0A;
-            --white: #FFFFFF;
+            --black: #050505;
+            --white: #F5F1E5;
+            --glass: rgba(18, 18, 18, 0.72);
+            --border: rgba(212, 175, 55, 0.25);
+            --shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
         }
-        body { margin: 0; font-family: 'Helvetica', sans-serif; background: var(--black); color: var(--white); }
-        
+        body {
+            margin: 0;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.12), transparent 22%),
+                        linear-gradient(180deg, #090909 0%, #080808 46%, #050505 100%);
+            color: var(--white);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle at top left, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+                              radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 32%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* Nav */
-        nav { display: flex; justify-content: space-between; padding: 20px 5%; border-bottom: 1px solid var(--gold); align-items: center; }
-        .logo { color: var(--gold); font-size: 1.5rem; letter-spacing: 2px; font-weight: bold; }
-        .nav-links a { color: var(--white); text-decoration: none; margin-right: 20px; }
-        .login-btn { padding: 8px 20px; background: var(--gold); border: none; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px 5%;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.78);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .logo {
+            color: var(--gold);
+            font-size: 1.9rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-right: 24px;
+            font-size: 0.95rem;
+            transition: color 0.25s ease;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .login-btn {
+            padding: 12px 28px;
+            background: var(--gold);
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            border-radius: 999px;
+            color: #090909;
+            box-shadow: 0 16px 30px rgba(212, 175, 55, 0.2);
+        }
 
         /* Hero */
-        header { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
-        .cta-btn { padding: 15px 40px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; text-decoration: none; color: var(--black); border-radius: 5px; margin-top: 20px; }
+        header {
+            min-height: 72vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.18), transparent 26%);
+            pointer-events: none;
+        }
+        header h1 {
+            font-size: clamp(3rem, 5vw, 4.6rem);
+            line-height: 1.02;
+            margin-bottom: 16px;
+            z-index: 1;
+            text-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
+        }
+        header p {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            color: rgba(245, 241, 229, 0.88);
+            line-height: 1.75;
+            letter-spacing: 0.02em;
+            z-index: 1;
+        }
+        .cta-btn {
+            padding: 16px 44px;
+            background: linear-gradient(135deg, #f3d567 0%, #b68924 100%);
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            color: #090909;
+            border-radius: 999px;
+            margin-top: 28px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            z-index: 1;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 26px 52px rgba(0, 0, 0, 0.34);
+        }
 
         /* Portfolio */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 50px 5%; }
-        .card { border: 1px solid var(--gold); border-radius: 10px; overflow: hidden; }
-        .card img { width: 100%; height: 400px; object-fit: cover; display: block; }
-        .card-label { padding: 15px; background: #000; color: var(--gold); text-align: center; font-weight: bold; border-top: 1px solid var(--gold); }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 26px;
+            padding: 60px 5%;
+        }
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(10, 10, 10, 0.72);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(212, 175, 55, 0.45);
+        }
+        .card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .card-label {
+            padding: 22px;
+            background: rgba(0, 0, 0, 0.85);
+            color: var(--gold);
+            text-align: center;
+            font-weight: 700;
+            border-top: 1px solid rgba(212, 175, 55, 0.18);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
 
         /* WhatsApp Button */
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: #fff; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid var(--gold); z-index: 1000; }
+        .trust-section {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 32px;
+            padding: 60px 5%;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .trust-copy {
+            background: rgba(10, 10, 10, 0.82);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+            backdrop-filter: blur(18px);
+        }
+        .eyebrow {
+            color: rgba(212, 175, 55, 0.9);
+            letter-spacing: 0.25em;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .trust-copy h2 {
+            margin: 0 0 18px;
+            font-size: clamp(2rem, 3vw, 2.9rem);
+            line-height: 1.1;
+        }
+        .trust-copy p {
+            margin: 0;
+            color: rgba(245, 241, 229, 0.92);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+        .trust-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.16);
+            border-radius: 18px;
+            padding: 28px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            color: rgba(245, 241, 229, 0.95);
+        }
+        .trust-card span {
+            color: var(--gold);
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+        .trust-card h3 {
+            margin: 0;
+            font-size: 1.12rem;
+            line-height: 1.4;
+        }
+        .wa-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+            border: 2px solid rgba(212, 175, 55, 0.8);
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -43,24 +248,47 @@
     </nav>
 
     <header>
-        <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Transform Your Photos into<br><span style="color: var(--gold);">Professional Masterpieces</span></h1>
+        <h1>Transform Your Photos into<br><span style="color: var(--gold);">Professional Masterpieces</span></h1>
+        <p>Elevate every image with premium color grading, luxury lifestyle edits, and high-end finishing for a bold, iconic portfolio.</p>
         <a href="https://wa.me/254701015044" class="cta-btn">Start Editing</a>
     </header>
 
     <section id="portfolio" class="portfolio-grid">
         <div class="card">
             <img src="IMG-20260701-WA0004.jpg" alt="Luxury Edit">
-            <div class="card-label">Luxury Edit</div>
+            <div class="card-label">Luxury Portrait Edit</div>
         </div>
         <div class="card">
             <img src="IMG-20260701-WA0007.jpg" alt="Fashion Edit">
-            <div class="card-label">Fashion Edit</div>
+            <div class="card-label">High-Fashion Edit</div>
         </div>
         <div class="card">
             <img src="IMG-20260701-WA0001.jpg" alt="Cultural Edit">
-            <div class="card-label">Cultural Edit</div>
+            <div class="card-label">Cultural Luxe Edit</div>
         </div>
-        </section>
+    </section>
+
+    <section class="trust-section">
+        <div class="trust-copy">
+            <p class="eyebrow">Trusted by luxury brands</p>
+            <h2>Elite visual edits that elevate every campaign.</h2>
+            <p>From premium portraits to high-fashion retouching, every image receives polished color, texture, and atmosphere for a high-end presentation.</p>
+        </div>
+        <div class="trust-grid">
+            <div class="trust-card">
+                <span>01</span>
+                <h3>Premium Retouching</h3>
+            </div>
+            <div class="trust-card">
+                <span>02</span>
+                <h3>Luxury Color Grading</h3>
+            </div>
+            <div class="trust-card">
+                <span>03</span>
+                <h3>Brand-Ready Visuals</h3>
+            </div>
+        </div>
+    </section>
 
     <footer style="text-align: center; padding: 40px; border-top: 1px solid var(--gold);">
         &copy; 2026 Cliff Edits. All Rights Reserved.
